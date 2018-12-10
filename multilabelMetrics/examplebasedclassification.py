@@ -1,5 +1,3 @@
-import numpy as np 
-
 
 
 def subsetAccuracy(y_test, predictions):
