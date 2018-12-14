@@ -176,8 +176,8 @@ def fbeta(y_test, predictions, beta=1):
     pr = precision(y_test, predictions)
     re = recall(y_test, predictions)
 
-    num = float((1+pow(beta,2))*precision*recall)
-    den = float(pow(beta,2)*precision + recall)
+    num = float((1+pow(beta,2))*pr*re)
+    den = float(pow(beta,2)*pr + re)
 
     if den != 0:
         fbeta = num/den
