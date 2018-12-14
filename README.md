@@ -3,8 +3,8 @@ Metrics for measuring our multilabel model.
 
 ## With this package you will have access to the most used metrics
 As refered in these papers:
-[A review on Multi-label Learning Algorithms](https://ieeexplore.ieee.org/document/6471714)
-[A unified View of Multi-Label Performance measures](https://arxiv.org/abs/1609.00288)
+* [A review on Multi-label Learning Algorithms](https://ieeexplore.ieee.org/document/6471714)
+* [A unified View of Multi-Label Performance measures](https://arxiv.org/abs/1609.00288)
 
 
 ## The metrics can be divided as in the image below
@@ -46,4 +46,4 @@ As refered in these papers:
 ![Recall](/img/recallPart1.png)
 ![Recall](/img/recallPart2.png)
 #### FBeta
-![FBeta](/img/FBeta.png)
+![FBeta](/img/fBetaMacroMicro.png)
