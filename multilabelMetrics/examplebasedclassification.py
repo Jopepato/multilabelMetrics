@@ -1,5 +1,3 @@
-
-
 def subsetAccuracy(y_test, predictions):
     """
     The subset accuracy evaluates the fraction of correctly classified examples
