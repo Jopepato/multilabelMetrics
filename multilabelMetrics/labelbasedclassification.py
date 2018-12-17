@@ -1,3 +1,4 @@
+from functions import multilabelConfussionMatrix, multilabelMicroConfussionMatrix
 def accuracyMacro(y_test, predictions):
     """
     Accuracy Macro of our model
@@ -14,7 +15,11 @@ def accuracyMacro(y_test, predictions):
         Accuracy Macro of our model
     """
     accuracymacro = 0.0
-
+    TP, FP, TN, FN = multilabelConfussionMatrix(y_test, predictions)
+    for i in range(len(TP)):
+        accuracymacro = accuracymacro + ((TP[i] + TN[i])/(TP[i] + FP[i] + TN[i] + FN[i]))
+    
+    accuracymacro = float(accuracymacro/len(TP))
 
     return accuracymacro
 
