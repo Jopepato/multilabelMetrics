@@ -60,3 +60,11 @@ def multilabelMicroConfussionMatrix(TP, FP, TN, FN):
     FPMicro = 0.0
     TNMicro = 0.0
     FNMicro = 0.0
+    
+    for i in range(len(TP)):
+        TPMicro = TPMicro + TP[i]
+        FPMicro = FPMicro + FP[i]
+        TNMicro = TNMicro + TN[i]
+        FNMicro = FNMicro + FN[i]
+    
+    return TPMicro, FPMicro, TNMicro, FNMicro
