@@ -68,3 +68,22 @@ def multilabelMicroConfussionMatrix(TP, FP, TN, FN):
         FNMicro = FNMicro + FN[i]
     
     return TPMicro, FPMicro, TNMicro, FNMicro
+
+def rankingMatrix(probabilities):
+    """
+    Matrix with the rankings for each label
+    """
+    ranking = np.zeros(shape=[probabilities.shape[0], probabilities.shape[1]])
+    probCopy = np.copy(probabilities)
+    for i in range(probabilities.shape[0]):
+        indexMost = 0
+        iteration = 1
+        while(sum(probCopy[i,:]) != 0):
+            for j in range(probabilities.shape[1]):
+                if probCopy[i,j] > probCopy[i,indexMost]:
+                    indexMost = j
+                ranking[i, indexMost] = iteration
+                probCopy[i, indexMost] = 0
+                iteration += 1
+    
+    return ranking
