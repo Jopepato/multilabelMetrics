@@ -1,25 +1,25 @@
 #Auxiliary functions
 import numpy as np
-def relevantIndexes(vector):
+def relevantIndexes(matrix, row):
     """
     Gets the relevant indexes of a vector
     """
     relevant = []
-    for i in range(len(vector)):
-        if vector[i] == 1:
-            relevant.append(int(i))
+    for j in range(matrix.shape[1]):
+        if matrix[row,j] == 1:
+            relevant.append(int(j))
     
     return relevant
 
 
-def irrelevantIndexes(vector):
+def irrelevantIndexes(matrix, row):
     """
     Gets the irrelevant indexes of a vector
     """
     irrelevant = []
-    for i in range(len(vector)):
-        if vector[0] == 0:
-            irrelevant.append(int(i))
+    for j in range(matrix.shape[1]):
+        if matrix[row,j] == 0:
+            irrelevant.append(int(j))
     
     return irrelevant
 

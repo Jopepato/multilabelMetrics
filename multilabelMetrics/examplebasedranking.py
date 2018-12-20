@@ -25,7 +25,7 @@ def oneError(y_test, probabilities):
     
     oneerror = float(oneerror)/float(y_test.shape[0])
 
-    return oneError
+    return oneerror
 
 def coverage(y_test, probabilities):
     """
@@ -79,7 +79,7 @@ def averagePrecision(y_test, probabilities):
     ranking = rankingMatrix(probabilities)
     
     for i in range(y_test.shape[0]):
-        relevantVector =relevantIndexes(y_test[i,:])
+        relevantVector =relevantIndexes(y_test, i)
         for j in range(y_test.shape[1]):
             average = 0.0
             if y_test[i, j] == 1:
@@ -117,8 +117,8 @@ def rankingLoss(y_test, probabilities):
     rankingloss = 0.0
 
     for i in range(y_test.shape[0]):
-        relevantVector = relevantIndexes(y_test[i,:])
-        irrelevantVector = irrelevantIndexes(y_test[i,:])
+        relevantVector = relevantIndexes(y_test, i)
+        irrelevantVector = irrelevantIndexes(y_test, i)
         loss = 0.0
 
         for j in range(y_test.shape[1]):
