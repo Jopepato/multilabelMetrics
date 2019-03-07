@@ -53,9 +53,9 @@ def hammingLoss(y_test, predictions):
     
     return hammingloss/y_test.shape[0]
 
-def accuracy(y_test, predictions):
+def eb_accuracy(y_test, predictions):
     """
-    Accuracy of our model
+    Example based accuracy of our model
 
     Params
     ======
@@ -88,9 +88,9 @@ def accuracy(y_test, predictions):
 
 
 
-def precision(y_test, predictions):
+def eb_precision(y_test, predictions):
     """
-    Precision of our model
+    Example based precision of our model
 
     Params
     ======
@@ -122,9 +122,9 @@ def precision(y_test, predictions):
     return precision
 
 
-def recall(y_test, predictions):
+def eb_recall(y_test, predictions):
     """
-    Recall of our model
+    Example based recall of our model
 
     Params
     ======
@@ -156,9 +156,9 @@ def recall(y_test, predictions):
 
 
 
-def fbeta(y_test, predictions, beta=1):
+def eb_fbeta(y_test, predictions, beta=1):
     """
-    FBeta of our model
+    Example based FBeta of our model
 
     Params
     ======

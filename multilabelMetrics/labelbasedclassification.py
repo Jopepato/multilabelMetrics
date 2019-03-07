@@ -1,4 +1,4 @@
-from functions import multilabelConfussionMatrix, multilabelMicroConfussionMatrix
+from .functions import multilabelConfussionMatrix, multilabelMicroConfussionMatrix
 def accuracyMacro(y_test, predictions):
     """
     Accuracy Macro of our model
