@@ -24,7 +24,8 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
 
         self.assertAlmostEqual(float(params['Accuracy']), float(eb_accuracy(ytest, y_pred)))
 
@@ -34,7 +35,8 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
 
         self.assertAlmostEqual(float(params['Precision']), float(eb_precision(ytest, y_pred)))
 
@@ -44,7 +46,8 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
 
         self.assertAlmostEqual(float(params['Recall']), float(eb_recall(ytest, y_pred)))
 
@@ -54,7 +57,8 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
         
         self.assertAlmostEqual(float(params['FBeta']), float(eb_fbeta(ytest, y_pred)))
     
@@ -64,7 +68,9 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
+
         self.assertAlmostEqual(float(params['SubsetAccuracy']), float(subsetAccuracy(ytest, y_pred)))
 
     def test_hammingLoss(self):
@@ -73,7 +79,8 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
 
         self.assertAlmostEqual(float(params['HammingLoss']), float(hammingLoss(ytest, y_pred)))
 
@@ -86,6 +93,7 @@ class multilabelMetricsTest(unittest.TestCase):
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
         probabilities = classifier.predict_proba(Xtest)
+        probabilities = probabilities.todense()
 
         self.assertAlmostEqual(float(params['aucMicro']), float(aucMicro(ytest, probabilities)))
 
@@ -96,6 +104,7 @@ class multilabelMetricsTest(unittest.TestCase):
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
         probabilities = classifier.predict_proba(Xtest)
+        probabilities = probabilities.todense()
 
         self.assertAlmostEqual(float(params['aucMacro']), float(aucMacro(ytest, probabilities)))
 
@@ -106,6 +115,7 @@ class multilabelMetricsTest(unittest.TestCase):
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
         probabilities = classifier.predict_proba(Xtest)
+        probabilities = probabilities.todense()
 
         self.assertAlmostEqual(float(params['aucInstance']), float(aucInstance(ytest, probabilities)))
 
@@ -117,6 +127,7 @@ class multilabelMetricsTest(unittest.TestCase):
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
         probabilities = classifier.predict_proba(Xtest)
+        probabilities = probabilities.todense()
 
         self.assertAlmostEqual(float(params['OneError']), float(oneError(ytest, probabilities)))
 
@@ -127,6 +138,7 @@ class multilabelMetricsTest(unittest.TestCase):
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
         probabilities = classifier.predict_proba(Xtest)
+        probabilities = probabilities.todense()
 
         self.assertAlmostEqual(float(params['Coverage']), float(coverage(ytest, probabilities)))
 
@@ -137,6 +149,7 @@ class multilabelMetricsTest(unittest.TestCase):
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
         probabilities = classifier.predict_proba(Xtest)
+        probabilities = probabilities.todense()
 
         self.assertAlmostEqual(float(params['AveragePrecision']), float(averagePrecision(ytest, probabilities)))
 
@@ -147,7 +160,8 @@ class multilabelMetricsTest(unittest.TestCase):
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
         probabilities = classifier.predict_proba(Xtest)
-
+        probabilities = probabilities.todense()
+        
         self.assertAlmostEqual(float(params['RankingLoss']), float(rankingLoss(ytest, probabilities)))
 
     #metrics for labelBasedClassification
@@ -157,7 +171,8 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
 
         self.assertAlmostEqual(float(params['AccuracyMicro']), float(accuracyMicro(ytest, y_pred)))
     
@@ -167,7 +182,8 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
 
         self.assertAlmostEqual(float(params['AccuracyMacro']), float(accuracyMacro(ytest, y_pred)))
 
@@ -177,7 +193,8 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
 
         self.assertAlmostEqual(float(params['PrecisionMicro']), float(eb_precision(ytest, y_pred)))
     
@@ -187,7 +204,9 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
+        y_pred = np.asarray(y_pred)
 
         self.assertAlmostEqual(float(params['PrecisionMacro']), float(precisionMacro(ytest, y_pred)))
     
@@ -197,7 +216,8 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
 
         self.assertAlmostEqual(float(params['RecallMicro']), float(recallMicro(ytest, y_pred)))
 
@@ -207,7 +227,8 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
 
         self.assertAlmostEqual(float(params['RecallMacro']), float(recallMacro(ytest, y_pred)))
 
@@ -217,7 +238,8 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
 
         self.assertAlmostEqual(float(params['FBetaMicro']), float(fbetaMicro(ytest, y_pred)))
 
@@ -227,6 +249,7 @@ class multilabelMetricsTest(unittest.TestCase):
         params = readParams(RESULTS_FILE)
         classifier = MLkNN(k=10)
         classifier.fit(Xtrain, ytrain)
-        y_pred = classifier.predict(Xtest).todense()
+        y_pred = classifier.predict(Xtest)
+        y_pred = y_pred.todense()
 
         self.assertAlmostEqual(float(params['FBetaMacro']), float(fbetaMacro(ytest, y_pred)))

@@ -70,7 +70,8 @@ def eb_accuracy(y_test, y_pred):
     unionArray = unionCardinality(y_test, y_pred)
     
     for i in range(y_test[0]):
-        accuracy += intersectionArray[i]/float(unionArray[i])
+        if unionArray[i] != 0:
+            accuracy += intersectionArray[i]/float(unionArray[i])
 
     accuracy = Decimal(accuracy)/Decimal(y_test.shape[0])
 
@@ -97,7 +98,8 @@ def eb_precision(y_test, y_pred):
 
     intersectionArray = intersectionCardinality(y_test, y_pred)
     for i in range(y_test.shape[0]):
-        precision += intersectionArray[i]/sum(y_pred[i,:])
+        if sum(y_pred[i,:]) != 0:
+            precision += float(intersectionArray[i]/sum(y_pred[i,:]))
             
 
     return Decimal(precision)/Decimal(y_test.shape[0])
@@ -123,7 +125,8 @@ def eb_recall(y_test, y_pred):
     interesectionArray = intersectionCardinality(y_test,y_pred)
 
     for i in range(y_test.shape[0]):
-        recall += interesectionArray[i]/sum(y_test[i,:])
+        if sum(y_test[i,:]):
+            recall += interesectionArray[i]/sum(y_test[i,:])
 
     return Decimal(recall)/Decimal(y_test.shape[0])
 

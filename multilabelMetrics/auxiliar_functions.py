@@ -89,7 +89,7 @@ def rankingMatrix(probabilities):
     return ranking
 
 def intersectionCardinality(y_test, y_pred):
-    interesectionArray = np.zeros(y_test.shape[0])
+    interesectionArray = np.zeros(y_test.shape[0],dtype=int)
     for i in range(y_test.shape[0]):
         intersection = 0
         for j in range(y_test.shape[1]):
@@ -100,7 +100,7 @@ def intersectionCardinality(y_test, y_pred):
     return interesectionArray
 
 def unionCardinality(y_test, y_pred):
-    unionArray = np.zeros(y_test.shape[0])
+    unionArray = np.zeros(y_test.shape[0], dtype=int)
     for i in range(y_test.shape[0]):
         union  = 0
         for j in range(y_test.shape[1]):
