@@ -8,6 +8,7 @@ authors = ["Jose Perez-Parras Toledano <joseperezparras95@gmail.com>"]
 numpy = "^1.16"
 scikit-multilearn = "^0.2.0"
 pytest = "^4.3"
+scipy = "^1.2"
 
 [tool.poetry.dev-dependencies]
 

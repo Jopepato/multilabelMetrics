@@ -1,0 +1,20 @@
+language: python
+python:
+  - "2.7"
+  - "3.6"
+git:
+  depth: false
+# command to install dependencies
+install:
+  - pip install poetry
+  - poetry install
+# command to run tests
+script:
+  - pytest
+branches:
+  only:
+    - /.*/
+notifications:
+  email: false
+after_sucess:
+  - echo "Travis CI built!"

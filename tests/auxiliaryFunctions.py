@@ -1,3 +1,4 @@
+import numpy as np
 def readParams (paramsFileName):
     "This functions reads the params from a file and store them in a dictionary"
     file = open(paramsFileName, 'r')
@@ -93,6 +94,5 @@ def readDataFromFile (fileName):
             numberData += 1
         
         numberLine += 1
-    X = sp.csr_matrix(X)
     file.close()
     return X, y
