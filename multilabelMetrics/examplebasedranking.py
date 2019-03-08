@@ -1,5 +1,5 @@
 import numpy as np
-from .functions import rankingMatrix, relevantIndexes, irrelevantIndexes
+from .auxiliar_functions import rankingMatrix, relevantIndexes, irrelevantIndexes
 def oneError(y_test, probabilities):
     """
     One Error 

@@ -95,4 +95,5 @@ def readDataFromFile (fileName):
         
         numberLine += 1
     file.close()
+    X = np.asarray(X, dtype=float)
     return X, y

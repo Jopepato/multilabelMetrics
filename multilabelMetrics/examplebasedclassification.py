@@ -1,4 +1,6 @@
-def subsetAccuracy(y_test, predictions):
+from decimal import Decimal
+from .auxiliar_functions import HammingDistanceListOfIntegers, intersectionCardinality, unionCardinality
+def subsetAccuracy(y_test, y_pred):
     """
     The subset accuracy evaluates the fraction of correctly classified examples
 
@@ -6,7 +8,7 @@ def subsetAccuracy(y_test, predictions):
     ======
     y_test : sparse or dense matrix (n_samples, n_labels)
         Matrix of labels used in the test phase
-    predictions: sparse or dense matrix (n_samples, n_labels)
+    y_pred: sparse or dense matrix (n_samples, n_labels)
         Matrix of predicted labels given by our model
     Returns
     =======
@@ -18,16 +20,16 @@ def subsetAccuracy(y_test, predictions):
     for i in range(y_test.shape[0]):
         same = True
         for j in range(y_test.shape[1]):
-            if y_test[i,j] != predictions[i,j]:
+            if y_test[i,j] != y_pred[i,j]:
                 same = False
                 break
         if same:
             subsetaccuracy += 1.0
     
-    return subsetaccuracy/y_test.shape[0]
+    return Decimal(subsetaccuracy)/Decimal(y_test.shape[0])
 
 
-def hammingLoss(y_test, predictions):
+def hammingLoss(y_test, y_pred):
     """
     The hamming loss evaluates the fraction of misclassified instance-label pairs
 
@@ -35,7 +37,7 @@ def hammingLoss(y_test, predictions):
     ======
     y_test : sparse or dense matrix (n_samples, n_labels)
         Matrix of labels used in the test phase
-    predictions: sparse or dense matrix (n_samples, n_labels)
+    y_pred: sparse or dense matrix (n_samples, n_labels)
         Matrix of predicted labels given by our model
     Returns
     =======
@@ -44,16 +46,11 @@ def hammingLoss(y_test, predictions):
     """
     hammingloss = 0.0
     for i in range(y_test.shape[0]):
-        aux = 0.0
-        for j in range(y_test.shape[1]):
-            if int(y_test[i,j]) != int(predictions[i,j]):
-                aux = aux+1.0
-        aux = aux/y_test.shape[1]
-        hammingloss = hammingloss + aux
+        hammingloss = hammingloss + HammingDistanceListOfIntegers(y_test[i,:], y_pred[i,:])/y_test.shape[1]
     
-    return hammingloss/y_test.shape[0]
+    return Decimal(hammingloss)/Decimal(y_test.shape[0])
 
-def eb_accuracy(y_test, predictions):
+def eb_accuracy(y_test, y_pred):
     """
     Example based accuracy of our model
 
@@ -61,7 +58,7 @@ def eb_accuracy(y_test, predictions):
     ======
     y_test : sparse or dense matrix (n_samples, n_labels)
         Matrix of labels used in the test phase
-    predictions: sparse or dense matrix (n_samples, n_labels)
+    y_pred: sparse or dense matrix (n_samples, n_labels)
         Matrix of predicted labels given by our model
     Returns
     =======
@@ -69,26 +66,19 @@ def eb_accuracy(y_test, predictions):
         Accuracy of our model
     """
     accuracy = 0.0
+    intersectionArray = intersectionCardinality(y_test, y_pred)
+    unionArray = unionCardinality(y_test, y_pred)
+    
+    for i in range(y_test[0]):
+        accuracy += intersectionArray[i]/float(unionArray[i])
 
-    for i in range(y_test.shape[0]):
-        intersection = 0.0
-        union = 0.0
-        for j in range(y_test.shape[1]):
-            if int(y_test[i,j]) == 1 or int(predictions[i,j]) == 1:
-                union += 1
-            if int(y_test[i,j]) == 1 and int(predictions[i,j]) == 1:
-                intersection += 1
-            
-        if union != 0:
-            accuracy = accuracy + float(intersection/union)
-
-    accuracy = float(accuracy/y_test.shape[0])
+    accuracy = Decimal(accuracy)/Decimal(y_test.shape[0])
 
     return accuracy
 
 
 
-def eb_precision(y_test, predictions):
+def eb_precision(y_test, y_pred):
     """
     Example based precision of our model
 
@@ -96,7 +86,7 @@ def eb_precision(y_test, predictions):
     ======
     y_test : sparse or dense matrix (n_samples, n_labels)
         Matrix of labels used in the test phase
-    predictions: sparse or dense matrix (n_samples, n_labels)
+    y_pred: sparse or dense matrix (n_samples, n_labels)
         Matrix of predicted labels given by our model
     Returns
     =======
@@ -105,24 +95,15 @@ def eb_precision(y_test, predictions):
     """
     precision = 0.0
 
+    intersectionArray = intersectionCardinality(y_test, y_pred)
     for i in range(y_test.shape[0]):
-        intersection = 0.0
-        hXi = 0.0
-        for j in range(y_test.shape[1]):
-            hXi = hXi + int(predictions[i,j])
-            if int(y_test[i,j]) == 1 and int(predictions[i,j]) == 1:
-                intersection += 1
-            
-        if hXi != 0:
-            precision = precision + float(intersection/hXi)
+        precision += intersectionArray[i]/sum(y_pred[i,:])
             
 
-    precision = float(precision/y_test.shape[0])
-    
-    return precision
+    return Decimal(precision)/Decimal(y_test.shape[0])
 
 
-def eb_recall(y_test, predictions):
+def eb_recall(y_test, y_pred):
     """
     Example based recall of our model
 
@@ -130,7 +111,7 @@ def eb_recall(y_test, predictions):
     ======
     y_test : sparse or dense matrix (n_samples, n_labels)
         Matrix of labels used in the test phase
-    predictions: sparse or dense matrix (n_samples, n_labels)
+    y_pred: sparse or dense matrix (n_samples, n_labels)
         Matrix of predicted labels given by our model
     Returns
     =======
@@ -139,24 +120,16 @@ def eb_recall(y_test, predictions):
     """
     recall = 0.0
 
+    interesectionArray = intersectionCardinality(y_test,y_pred)
+
     for i in range(y_test.shape[0]):
-        intersection = 0.0
-        Yi = 0.0
-        for j in range(y_test.shape[1]):
-            Yi = Yi + int(y_test[i,j])
+        recall += interesectionArray[i]/sum(y_test[i,:])
 
-            if y_test[i,j] == 1 and int(predictions[i,j]) == 1:
-                intersection = intersection + 1
-    
-        if Yi != 0:
-            recall = recall + float(intersection/Yi)    
-    
-    recall = recall/y_test.shape[0]
-    return recall
+    return Decimal(recall)/Decimal(y_test.shape[0])
 
 
 
-def eb_fbeta(y_test, predictions, beta=1):
+def eb_fbeta(y_test, y_pred, beta=1):
     """
     Example based FBeta of our model
 
@@ -164,21 +137,21 @@ def eb_fbeta(y_test, predictions, beta=1):
     ======
     y_test : sparse or dense matrix (n_samples, n_labels)
         Matrix of labels used in the test phase
-    predictions: sparse or dense matrix (n_samples, n_labels)
+    y_pred: sparse or dense matrix (n_samples, n_labels)
         Matrix of predicted labels given by our model
     Returns
     =======
     fbeta : float
         fbeta of our model
     """
-    pr = precision(y_test, predictions)
-    re = recall(y_test, predictions)
+    pr = eb_precision(y_test, y_pred)
+    re = eb_recall(y_test, y_pred)
 
     num = float((1+pow(beta,2))*pr*re)
     den = float(pow(beta,2)*pr + re)
 
     if den != 0:
-        fbeta = num/den
+        fbeta = Decimal(num)/Decimal(den)
     else:
         fbeta = 0.0
     return fbeta

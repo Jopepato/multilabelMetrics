@@ -23,7 +23,7 @@ def irrelevantIndexes(vector):
     
     return irrelevant
 
-def multilabelConfussionMatrix(y_test, predictions):
+def multilabelConfussionMatrix(y_test, y_pred):
     """
     Returns the TP, FP, TN, FN
     """
@@ -39,12 +39,12 @@ def multilabelConfussionMatrix(y_test, predictions):
         FNaux = 0
         for i in range(y_test.shape[0]):
             if int(y_test[i,j]) == 1:
-                if int(y_test[i,j]) == 1 and int(predictions[i,j]) == 1:
+                if int(y_test[i,j]) == 1 and int(y_pred[i,j]) == 1:
                     TPaux += 1
                 else:
                     FPaux += 1
             else:
-                if int(y_test[i,j]) == 0 and int(predictions[i,j]) == 0:
+                if int(y_test[i,j]) == 0 and int(y_pred[i,j]) == 0:
                     TNaux += 1
                 else:
                     FNaux += 1
@@ -87,3 +87,53 @@ def rankingMatrix(probabilities):
                 iteration += 1
     
     return ranking
+
+def intersectionCardinality(y_test, y_pred):
+    interesectionArray = np.zeros(y_test.shape[0])
+    for i in range(y_test.shape[0]):
+        intersection = 0
+        for j in range(y_test.shape[1]):
+            if int(y_test[i,j]) == 1 and int(y_pred[i,j] == 1):
+                intersection += 1
+        interesectionArray[i] = intersection
+
+    return interesectionArray
+
+def unionCardinality(y_test, y_pred):
+    unionArray = np.zeros(y_test.shape[0])
+    for i in range(y_test.shape[0]):
+        union  = 0
+        for j in range(y_test.shape[1]):
+            if int(y_test[i,j] == 1) or int(y_pred[i,j] == 1):
+                union += 1
+        
+        unionArray[i] = union
+
+    return unionArray
+
+def HammingDistanceListOfIntegers(y_true, y_pred):
+    """
+    Returns the hamming distance
+    """
+    hamming = 0
+    x_index = 0
+    y_index  = 0
+    x_length = sum(y_true)
+    y_length = sum(y_pred)
+
+    if (x_length ==0 or y_length==0):
+        hamming = x_length + y_length
+    else:
+        while(x_index < x_length and y_index < y_length):
+            if(y_true[x_index] == y_pred[y_index]):
+                x_index += 1
+                y_index +=1
+            else:
+                hamming += 1
+                if y_true[x_index] < y_pred[y_index]:
+                    x_index += 1
+                else:
+                    y_index += 1
+        hamming += x_length-x_index + y_length-y_index
+    
+    return hamming
