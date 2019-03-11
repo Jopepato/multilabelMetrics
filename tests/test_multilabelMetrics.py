@@ -37,6 +37,7 @@ class multilabelMetricsTest(unittest.TestCase):
         classifier.fit(Xtrain, ytrain)
         y_pred = classifier.predict(Xtest)
         y_pred = y_pred.todense()
+        y_pred = np.array(y_pred)
 
         self.assertAlmostEqual(float(params['Precision']), float(eb_precision(ytest, y_pred)))
 
@@ -95,7 +96,7 @@ class multilabelMetricsTest(unittest.TestCase):
         probabilities = classifier.predict_proba(Xtest)
         probabilities = probabilities.todense()
 
-        self.assertAlmostEqual(float(params['aucMicro']), float(aucMicro(ytest, probabilities)))
+        self.assertAlmostEqual(float(params['AUCmicro']), float(aucMicro(ytest, probabilities)))
 
     def test_aucMacro(self):
         Xtrain, ytrain = readDataFromFile(TRAINDATA_FILE)
@@ -106,7 +107,7 @@ class multilabelMetricsTest(unittest.TestCase):
         probabilities = classifier.predict_proba(Xtest)
         probabilities = probabilities.todense()
 
-        self.assertAlmostEqual(float(params['aucMacro']), float(aucMacro(ytest, probabilities)))
+        self.assertAlmostEqual(float(params['AUCmacro']), float(aucMacro(ytest, probabilities)))
 
     def test_aucInstance(self):
         Xtrain, ytrain = readDataFromFile(TRAINDATA_FILE)
@@ -117,7 +118,7 @@ class multilabelMetricsTest(unittest.TestCase):
         probabilities = classifier.predict_proba(Xtest)
         probabilities = probabilities.todense()
 
-        self.assertAlmostEqual(float(params['aucInstance']), float(aucInstance(ytest, probabilities)))
+        self.assertAlmostEqual(float(params['AUCInstance']), float(aucInstance(ytest, probabilities)))
 
     #And then the tests for the exampleBasedRanking metrics
     def test_oneError(self):
@@ -129,7 +130,7 @@ class multilabelMetricsTest(unittest.TestCase):
         probabilities = classifier.predict_proba(Xtest)
         probabilities = probabilities.todense()
 
-        self.assertAlmostEqual(float(params['OneError']), float(oneError(ytest, probabilities)))
+        self.assertAlmostEqual(float(params['OneError']), float(oneError(ytest,probabilities)))
 
     def test_coverage(self):
         Xtrain, ytrain = readDataFromFile(TRAINDATA_FILE)

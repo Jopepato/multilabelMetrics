@@ -1,5 +1,6 @@
 from decimal import Decimal
 from .auxiliar_functions import HammingDistanceListOfIntegers, intersectionCardinality, unionCardinality
+import numpy as np
 def subsetAccuracy(y_test, y_pred):
     """
     The subset accuracy evaluates the fraction of correctly classified examples
@@ -98,8 +99,8 @@ def eb_precision(y_test, y_pred):
 
     intersectionArray = intersectionCardinality(y_test, y_pred)
     for i in range(y_test.shape[0]):
-        if sum(y_pred[i,:]) != 0:
-            precision += float(intersectionArray[i]/sum(y_pred[i,:]))
+        if np.sum(np.array(y_pred[i,:])) != 0:
+            precision += float(intersectionArray[i])/float(sum(np.array(y_pred[i,:])))
             
 
     return Decimal(precision)/Decimal(y_test.shape[0])
@@ -125,8 +126,8 @@ def eb_recall(y_test, y_pred):
     interesectionArray = intersectionCardinality(y_test,y_pred)
 
     for i in range(y_test.shape[0]):
-        if sum(y_test[i,:]):
-            recall += interesectionArray[i]/sum(y_test[i,:])
+        if sum(np.array(y_test[i,:])):
+            recall += float(interesectionArray[i])/float(sum(np.array(y_test[i,:])))
 
     return Decimal(recall)/Decimal(y_test.shape[0])
 

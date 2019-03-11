@@ -1,5 +1,6 @@
 import numpy as np
 from .auxiliar_functions import rankingMatrix, relevantIndexes, irrelevantIndexes
+from decimal import Decimal
 def oneError(y_test, probabilities):
     """
     One Error 
@@ -23,9 +24,9 @@ def oneError(y_test, probabilities):
         if y_test[i,index] == 0:
             oneerror += 1.0
     
-    oneerror = float(oneerror)/float(y_test.shape[0])
+    oneerror = Decimal(oneerror)/Decimal(y_test.shape[0])
 
-    return oneError
+    return oneerror
 
 def coverage(y_test, probabilities):
     """
@@ -54,8 +55,8 @@ def coverage(y_test, probabilities):
         
         coverage += coverageMax
 
-    coverage = float(coverage)/float(y_test.shape[0])
-    coverage -= 1.0
+    coverage = Decimal(coverage)/Decimal(y_test.shape[0])
+    coverage -= 1
 
     return coverage
 
@@ -91,12 +92,12 @@ def averagePrecision(y_test, probabilities):
                 averageprecisionsummatory += average/ranking[i,j]
         
         if len(relevantVector) == 0:
-            averageprecision += 1.0
+            averageprecision += 1
         else:
-            averageprecision += averageprecisionsummatory/float(len(relevantVector))
+            averageprecision = Decimal(averageprecision) + Decimal(averageprecisionsummatory)/Decimal(len(relevantVector))
         averageprecisionsummatory = 0.0
     
-    averageprecision /= y_test.shape[0]
+    averageprecision /= Decimal(y_test.shape[0])
     return averageprecision
 
 def rankingLoss(y_test, probabilities):
@@ -114,22 +115,22 @@ def rankingLoss(y_test, probabilities):
     rankingloss : float
         Ranking Loss
     """
-    rankingloss = 0.0
 
-    for i in range(y_test.shape[0]):
-        relevantVector = relevantIndexes(y_test[i,:])
-        irrelevantVector = irrelevantIndexes(y_test[i,:])
+    rankingloss = 0.0
+    for i in range(0, y_test.shape[0]):
+        relevantVector = relevantIndexes(y_test[i])
+        irrelevantVector = irrelevantIndexes(y_test[i])
         loss = 0.0
 
-        for j in range(y_test.shape[1]):
-            if y_test[i,j] == 1:
-                for k in range(y_test.shape[1]):
-                    if y_test[i,k] == 0:
-                        if float(probabilities[i,j]) <= float(probabilities[i,k]):
-                            loss += 1.0
-        if len(relevantVector) != 0 and len(irrelevantVector) != 0:
-            rankingloss += loss/float(len(relevantVector)*len(irrelevantVector))
-    
-    rankingloss /= y_test.shape[0]
+        for j in range(len(relevantVector)):
+            for k in range(len(irrelevantVector)):
+                if probabilities[i,relevantVector[j]] <= probabilities[i, irrelevantVector[k]]:
+                    loss +=1
+
+        if len(relevantVector)*len(irrelevantVector) != 0:
+            dim = len(relevantVector)*len(irrelevantVector)
+            rankingloss = Decimal(rankingloss) + Decimal(loss)/Decimal(dim)
+
+    rankingloss = Decimal(rankingloss)/Decimal(y_test.shape[0])
 
     return rankingloss
