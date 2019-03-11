@@ -70,7 +70,7 @@ def eb_accuracy(y_test, y_pred):
     intersectionArray = intersectionCardinality(y_test, y_pred)
     unionArray = unionCardinality(y_test, y_pred)
     
-    for i in range(y_test[0]):
+    for i in range(y_test.shape[0]):
         if unionArray[i] != 0:
             accuracy += intersectionArray[i]/float(unionArray[i])
 

@@ -18,10 +18,10 @@ def oneError(y_test, probabilities):
     """
     oneerror = 0.0
     ranking = rankingMatrix(probabilities)
-
     for i in range(y_test.shape[0]):
+        relevantVector = relevantIndexes(y_test[i,:])
         index = np.argmin(ranking[i,:])
-        if y_test[i,index] == 0:
+        if int(index) not in relevantVector:
             oneerror += 1.0
     
     oneerror = Decimal(oneerror)/Decimal(y_test.shape[0])
@@ -76,28 +76,25 @@ def averagePrecision(y_test, probabilities):
         Average Precision
     """
     averageprecision = 0.0
-    averageprecisionsummatory = 0.0
     ranking = rankingMatrix(probabilities)
-    
     for i in range(y_test.shape[0]):
-        relevantVector =relevantIndexes(y_test[i,:])
-        for j in range(y_test.shape[1]):
-            average = 0.0
-            if y_test[i, j] == 1:
-                for k in range(y_test.shape[1]):
-                    if(y_test[i,k] == 1):
-                        if ranking[i,k] <= ranking[i,j]:
-                            average += 1.0
-            if ranking[i,j] != 0:
-                averageprecisionsummatory += average/ranking[i,j]
-        
-        if len(relevantVector) == 0:
-            averageprecision += 1
-        else:
-            averageprecision = Decimal(averageprecision) + Decimal(averageprecisionsummatory)/Decimal(len(relevantVector))
-        averageprecisionsummatory = 0.0
+        average = 0.0
+        relevantVector = relevantIndexes(y_test[i,:])
+        for j in range(len(relevantVector)):
+            c = 0
+            fraction = 0.0
+            for k in range(y_test.shape[1]):
+                if(probabilities[i,k] >= probabilities[i,relevantVector[j]]):
+                    c +=1
+                    if int(k) in relevantVector:
+                        fraction +=1
+
+            average = average + fraction/c
+        if(len(relevantVector) > 0):
+            averageprecision = averageprecision + average/len(relevantVector)
     
-    averageprecision /= Decimal(y_test.shape[0])
+    averageprecision = Decimal(averageprecision)/Decimal(y_test.shape[0])
+
     return averageprecision
 
 def rankingLoss(y_test, probabilities):
