@@ -47,7 +47,7 @@ def hammingLoss(y_test, y_pred):
     """
     hammingloss = 0.0
     for i in range(y_test.shape[0]):
-        hammingloss = hammingloss + HammingDistanceListOfIntegers(y_test[i,:], y_pred[i,:])/y_test.shape[1]
+        hammingloss = hammingloss + HammingDistanceListOfIntegers(y_test[i,:], np.asarray(y_pred[i,:]))/y_test.shape[1]
     
     return Decimal(hammingloss)/Decimal(y_test.shape[0])
 
@@ -100,9 +100,9 @@ def eb_precision(y_test, y_pred):
     intersectionArray = intersectionCardinality(y_test, y_pred)
     for i in range(y_test.shape[0]):
         if np.sum(np.array(y_pred[i,:])) != 0:
-            precision += float(intersectionArray[i])/float(sum(np.array(y_pred[i,:])))
+            precision = precision + intersectionArray[i]/sum(y_pred[i,:])
             
-
+    print(precision)
     return Decimal(precision)/Decimal(y_test.shape[0])
 
 
