@@ -197,7 +197,7 @@ class multilabelMetricsTest(unittest.TestCase):
         y_pred = classifier.predict(Xtest)
         y_pred = y_pred.todense()
 
-        self.assertAlmostEqual(float(params['PrecisionMicro']), float(eb_precision(ytest, y_pred)))
+        self.assertAlmostEqual(float(params['PrecisionMicro']), float(precisionMicro(ytest, y_pred)))
     
     def test_precisionMacro(self):
         Xtrain, ytrain = readDataFromFile(TRAINDATA_FILE)
