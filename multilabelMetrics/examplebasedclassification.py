@@ -47,7 +47,8 @@ def hammingLoss(y_test, y_pred):
     """
     hammingloss = 0.0
     for i in range(y_test.shape[0]):
-        hammingloss = hammingloss + HammingDistanceListOfIntegers(y_test[i,:], np.asarray(y_pred[i,:]))/y_test.shape[1]
+        hammingDistance = HammingDistanceListOfIntegers(y_test[i,:], y_pred[i,:].A1)
+        hammingloss = Decimal(hammingloss) + Decimal(hammingDistance)/Decimal(y_test.shape[1])
     
     return Decimal(hammingloss)/Decimal(y_test.shape[0])
 

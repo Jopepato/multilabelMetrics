@@ -121,13 +121,11 @@ def HammingDistanceListOfIntegers(y_true, y_pred):
     """
     Returns the hamming distance
     """
-    print(y_true)
-    print(y_pred)
-    hamming = 0
+    hamming = 0.0
     x_index = 0
     y_index  = 0
-    x_length = np.sum(y_true)
-    y_length = np.sum(y_pred)
+    x_length = float(np.sum(y_true))
+    y_length = float(np.sum(y_pred))
 
     if (x_length ==0 or y_length==0):
         hamming = x_length + y_length
