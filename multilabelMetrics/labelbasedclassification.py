@@ -1,4 +1,5 @@
 from .auxiliar_functions import multilabelConfussionMatrix, multilabelMicroConfussionMatrix
+from decimal import Decimal
 def accuracyMacro(y_test, y_pred):
     """
     Accuracy Macro of our model
@@ -17,9 +18,9 @@ def accuracyMacro(y_test, y_pred):
     accuracymacro = 0.0
     TP, FP, TN, FN = multilabelConfussionMatrix(y_test, y_pred)
     for i in range(len(TP)):
-        accuracymacro = accuracymacro + ((TP[i] + TN[i])/(TP[i] + FP[i] + TN[i] + FN[i]))
+        accuracymacro = Decimal(accuracymacro) + Decimal(TP[i] + TN[i])/Decimal(TP[i] + FP[i] + TN[i] + FN[i])
     
-    accuracymacro = float(accuracymacro/len(TP))
+    accuracymacro = Decimal(accuracymacro)/Decimal(y_test.shape[1])
 
     return accuracymacro
 
@@ -43,8 +44,7 @@ def accuracyMicro(y_test, y_pred):
     TP, FP, TN, FN = multilabelConfussionMatrix(y_test, y_pred)
     TPMicro, FPMicro, TNMicro, FNMicro = multilabelMicroConfussionMatrix(TP, FP, TN, FN)
 
-    if (TPMicro + FPMicro + TNMicro + FNMicro) != 0:
-        accuracymicro = float((TPMicro+TNMicro)/(TPMicro + FPMicro + TNMicro + FNMicro))
+    accuracymicro = Decimal(TPMicro+TNMicro)/Decimal(y_test.shape[0])
 
     return accuracymicro
 
@@ -68,9 +68,9 @@ def precisionMacro(y_test, y_pred):
     TP, FP, TN, FN = multilabelConfussionMatrix(y_test, y_pred)
     for i in range(len(TP)):
         if TP[i] + FP[i] != 0:
-            precisionmacro = precisionmacro + (TP[i]/(TP[i] + FP[i]))
+            precisionmacro = Decimal(precisionmacro) + Decimal(TP[i])/Decimal(TP[i] + FP[i])
 
-    precisionmacro = float(precisionmacro/len(TP))
+    precisionmacro = Decimal(precisionmacro)/Decimal(y_test.shape[1])
     return precisionmacro
 
 
@@ -93,7 +93,7 @@ def precisionMicro(y_test, y_pred):
     TP, FP, TN, FN = multilabelConfussionMatrix(y_test, y_pred)
     TPMicro, FPMicro, TNMicro, FNMicro = multilabelMicroConfussionMatrix(TP, FP, TN, FN)
     if (TPMicro + FPMicro) != 0:
-        precisionmicro = float(TPMicro/(TPMicro + FPMicro))
+        precisionmicro = Decimal(TPMicro)/Decimal(TPMicro + FPMicro)
 
 
     return precisionmicro
@@ -142,7 +142,7 @@ def recallMicro(y_test, y_pred):
     TPMicro, FPMicro, TNMicro, FNMicro = multilabelMicroConfussionMatrix(TP, FP, TN, FN)
 
     if (TPMicro + FNMicro) != 0:
-        recallmicro = float(TPMicro/(TPMicro + FNMicro))
+        recallmicro = Decimal(TPMicro)/Decimal(TPMicro + FNMicro)
 
     return recallmicro
 
@@ -169,9 +169,9 @@ def fbetaMacro(y_test, y_pred, beta=1):
         num = float((1+pow(beta,2))*TP[i])
         den = float((1+pow(beta,2))*TP[i] + pow(beta,2)*FN[i] + FP[i])
         if den != 0:
-            fbetamacro = fbetamacro + num/den
+            fbetamacro = Decimal(fbetamacro) + Decimal(num)/Decimal(den)
 
-    fbetamacro = fbetamacro/len(TP)
+    fbetamacro = Decimal(fbetamacro)/Decimal(y_test.shape[1])
     return fbetamacro
 
 def fbetaMicro(y_test, y_pred, beta=1):
@@ -195,6 +195,6 @@ def fbetaMicro(y_test, y_pred, beta=1):
 
     num = float((1+pow(beta,2))*TPMicro)
     den = float((1+pow(beta,2))*TPMicro + pow(beta,2)*FNMicro + FPMicro)
-    fbetamicro = float(num/den)
+    fbetamicro = Decimal(num)/Decimal(den)
 
     return fbetamicro

@@ -1,5 +1,6 @@
 #Auxiliary functions
 import numpy as np
+from decimal import Decimal
 def relevantIndexes(vector):
     """
     Gets the relevant indexes of a vector
@@ -67,6 +68,11 @@ def multilabelMicroConfussionMatrix(TP, FP, TN, FN):
         TNMicro = TNMicro + TN[i]
         FNMicro = FNMicro + FN[i]
     
+    TPMicro = Decimal(TPMicro)/Decimal(len(TP))
+    FPMicro = Decimal(FPMicro)/Decimal(len(TP))
+    TNMicro = Decimal(TNMicro)/Decimal(len(TP))
+    FNMicro = Decimal(FNMicro)/Decimal(len(TP))
+
     return TPMicro, FPMicro, TNMicro, FNMicro
 
 def rankingMatrix(probabilities):

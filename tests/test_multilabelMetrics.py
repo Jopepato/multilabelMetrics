@@ -37,7 +37,7 @@ class multilabelMetricsTest(unittest.TestCase):
         classifier.fit(Xtrain, ytrain)
         y_pred = classifier.predict(Xtest)
         y_pred = y_pred.todense()
-        y_pred = np.array(y_pred)
+        y_pred = np.asarray(y_pred,dtype=int)
 
         self.assertAlmostEqual(float(params['Precision']), float(eb_precision(ytest, y_pred)))
 
