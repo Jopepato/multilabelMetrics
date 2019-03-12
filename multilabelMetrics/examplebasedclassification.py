@@ -98,9 +98,10 @@ def eb_precision(y_test, y_pred):
     precision = 0.0
 
     intersectionArray = intersectionCardinality(y_test, y_pred)
+    print(intersectionArray)
     for i in range(y_test.shape[0]):
-        if np.sum(np.array(y_pred[i,:])) != 0:
-            precision = precision + intersectionArray[i]/sum(y_pred[i,:])
+        if sum(np.asarray(y_pred[i,:])) != 0:
+            precision = precision + float(intersectionArray[i])/float(sum(np.asarray(y_pred[i,:])))
             
     print(precision)
     return Decimal(precision)/Decimal(y_test.shape[0])
