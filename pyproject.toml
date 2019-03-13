@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "multilabelmetrics"
+name = "multilabelMetrics"
 version = "0.1.0"
 description = "Metrics for multilabel classification"
 authors = ["Jose Perez-Parras Toledano <joseperezparras95@gmail.com>"]
