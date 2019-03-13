@@ -1,6 +1,5 @@
 language: python
 python:
-  - "2.7"
   - "3.6"
 git:
   depth: false
@@ -8,6 +7,7 @@ git:
 install:
   - pip install poetry
   - poetry install
+  - python setup.py install
 # command to run tests
 script:
   - pytest
