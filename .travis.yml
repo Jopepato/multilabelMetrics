@@ -10,7 +10,7 @@ install:
   - python setup.py install
 # command to run tests
 script:
-  - pytest
+  - python -m pytest
 branches:
   only:
     - /.*/
