@@ -85,7 +85,6 @@ class multilabelMetricsTest(unittest.TestCase):
 
         self.assertAlmostEqual(float(params['HammingLoss']), float(hammingLoss(ytest, y_pred)))
 
-
     ##Now the labelBasedRanking
     def test_aucMicro(self):
         Xtrain, ytrain = readDataFromFile(TRAINDATA_FILE)
