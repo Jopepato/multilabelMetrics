@@ -1,26 +1,30 @@
 #Auxiliary functions
 import numpy as np
+<<<<<<< HEAD:multilabelMetrics/auxiliar_functions.py
 from decimal import Decimal
 def relevantIndexes(vector):
+=======
+def relevantIndexes(matrix, row):
+>>>>>>> master:multilabelMetrics/functions.py
     """
     Gets the relevant indexes of a vector
     """
     relevant = []
-    for i in range(len(vector)):
-        if vector[i] == 1:
-            relevant.append(int(i))
+    for j in range(matrix.shape[1]):
+        if matrix[row,j] == 1:
+            relevant.append(int(j))
     
     return relevant
 
 
-def irrelevantIndexes(vector):
+def irrelevantIndexes(matrix, row):
     """
     Gets the irrelevant indexes of a vector
     """
     irrelevant = []
-    for i in range(len(vector)):
-        if vector[0] == 0:
-            irrelevant.append(int(i))
+    for j in range(matrix.shape[1]):
+        if matrix[row,j] == 0:
+            irrelevant.append(int(j))
     
     return irrelevant
 

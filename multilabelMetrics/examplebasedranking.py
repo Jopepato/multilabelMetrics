@@ -78,6 +78,7 @@ def averagePrecision(y_test, probabilities):
     averageprecision = 0.0
     ranking = rankingMatrix(probabilities)
     for i in range(y_test.shape[0]):
+<<<<<<< HEAD
         average = 0.0
         relevantVector = relevantIndexes(y_test[i,:])
         for j in range(len(relevantVector)):
@@ -92,6 +93,24 @@ def averagePrecision(y_test, probabilities):
             average = average + fraction/c
         if(len(relevantVector) > 0):
             averageprecision = averageprecision + average/len(relevantVector)
+=======
+        relevantVector =relevantIndexes(y_test, i)
+        for j in range(y_test.shape[1]):
+            average = 0.0
+            if y_test[i, j] == 1:
+                for k in range(y_test.shape[1]):
+                    if(y_test[i,k] == 1):
+                        if ranking[i,k] <= ranking[i,j]:
+                            average += 1.0
+            if ranking[i,j] != 0:
+                averageprecisionsummatory += average/ranking[i,j]
+        
+        if len(relevantVector) == 0:
+            averageprecision += 1.0
+        else:
+            averageprecision += averageprecisionsummatory/float(len(relevantVector))
+        averageprecisionsummatory = 0.0
+>>>>>>> master
     
     averageprecision = Decimal(averageprecision)/Decimal(y_test.shape[0])
 
@@ -113,10 +132,16 @@ def rankingLoss(y_test, probabilities):
         Ranking Loss
     """
 
+<<<<<<< HEAD
     rankingloss = 0.0
     for i in range(0, y_test.shape[0]):
         relevantVector = relevantIndexes(y_test[i])
         irrelevantVector = irrelevantIndexes(y_test[i])
+=======
+    for i in range(y_test.shape[0]):
+        relevantVector = relevantIndexes(y_test, i)
+        irrelevantVector = irrelevantIndexes(y_test, i)
+>>>>>>> master
         loss = 0.0
 
         for j in range(len(relevantVector)):
