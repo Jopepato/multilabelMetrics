@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 import unittest
-import os
+import sys, os
 from multilabelMetrics.exampleBasedClassification import eb_accuracy, eb_fbeta, eb_precision, eb_recall, subsetAccuracy, hammingLoss
 from multilabelMetrics.labelBasedRanking import aucMicro, aucMacro, aucInstance
 from multilabelMetrics.exampleBasedRanking import oneError, coverage, rankingLoss, averagePrecision
@@ -9,6 +9,8 @@ from multilabelMetrics.labelBasedClassification import accuracyMicro, accuracyMa
 from skmultilearn.adapt import MLkNN
 from auxiliaryFunctions import readParams, readDataFromFile
 
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, myPath + '/../')
 TRAINDATA_FILE = os.path.join(os.path.dirname(__file__), 'emotions0.train')
 TESTDATA_FILE = os.path.join(os.path.dirname(__file__), 'emotions0.gen')
 RESULTS_FILE = os.path.join(os.path.dirname(__file__), 'results.txt')
